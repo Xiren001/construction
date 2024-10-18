@@ -1,0 +1,1 @@
+<img class="logo" src="{{ asset('assets/image/logo-c.png') }}" width="100" alt="Maxino Dental Clinic Logo">
