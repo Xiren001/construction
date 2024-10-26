@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxino Dental Clinic</title>
+    <title>Ground Work</title>
     <link rel="icon" href="{{ asset('assets/image/logo.png') }}" type="image/x-icon">
     <link href=" {{ asset('assets/css/styles.css') }}" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -52,13 +52,13 @@
             <ul>
                 <li>
                     <a href="{{ route('landingpage') }}">
-                        <img class="logo" src="{{ asset('assets/image/logos.png') }}" width="50" alt="Maxino Dental Clinic Logo">
+                        <img class="logo" src="{{ asset('assets/image/logo-c.png') }}" width="90" alt="Logo">
                     </a>
                 </li>
                 <li class="hideOnMobile li"><a href="#">About</a></li>
                 <li class="hideOnMobile li">
                     <a href="#" class="ser-hover">Service&nbsp;
-                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
@@ -105,7 +105,7 @@
     <footer class="footer">
         <div class="roww" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
             <div class="footer-col">
-                <img class="logo" src="{{ asset('assets/image/logos.png') }}" width="150" alt="Maxino Dental Clinic Logo">
+                <img class="logo" src="{{ asset('assets/image/logo-c.png') }}" width="150" alt="Maxino Dental Clinic Logo">
             </div>
             <div class="footer-col">
                 <h4>Useful Links</h4>

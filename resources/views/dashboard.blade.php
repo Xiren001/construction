@@ -24,7 +24,7 @@
                     snackbar.style.transition = 'opacity 1s';
                     setTimeout(function () {
                         snackbar.remove();  // Remove from DOM after fading out
-                    }, 1000);
+                    }, 3000);
                 }, 3000);  // Display the snackbar for 3 seconds
             }
         });
