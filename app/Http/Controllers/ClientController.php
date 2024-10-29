@@ -28,7 +28,6 @@ class ClientController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email|unique:clients,email',
             'phone' => 'required|numeric',
-            
             'address_home' => 'required|string', // New validation
 
             'services' => 'nullable|array', // Validate that services are an array

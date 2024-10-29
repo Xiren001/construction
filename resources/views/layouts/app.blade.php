@@ -7,19 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Ground Work</title>
     <link rel="icon" href="{{ asset('assets/image/logo.png') }}" type="image/x-icon">
-    <!-- FullCalendar Styles -->
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css' rel='stylesheet' />
 
     <!-- Fonts and other resources -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- FullCalendar and Google Calendar Plugin Scripts -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.15/index.global.min.js'></script>
-    <!-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js'></script> -->
     <style>
         #snackbar,
         #errorSnackbar {
@@ -94,27 +86,63 @@
             }
         }
 
-        .table-striped tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
+        .table{
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            line-height: 1.5rem;
+            font-family: sans-serif;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        .table thead tr{
+            background-color: #0A3247;
+            color: white;
         }
 
-        .table-striped tbody tr:nth-child(even) {
-            background-color: #ffffff;
+        .table thead tr th:first-child{
+            border-radius: 10px 0 0 0;
+        }
+        .table thead tr th:last-child{
+            border-radius: 0 10px 0 0;
         }
 
-        .table-striped tbody tr:hover {
-            background-color: #f1f1f1;
+        .table thead tr th{
+            padding: 1rem 5%;
+            font-weight: 100;
+            width: 25%;
+            text-align: start;
+            line-height: 1.7;
+            
         }
-        
-        .create-con{
-            width: 50% !important;
+        .table tbody tr td{
+            padding: 1rem 5%;
+            font-weight: 100;
+            font-size: 15px;
+            color: #666666;
+            text-align: start;
+            line-height: 1.2;
+            font-weight: unset !important;
+            border-bottom: 1px solid #f2f2f2;
+            width: 25%;
         }
 
-        .create-modal{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .table thead tr th:last-child{
+            width: 15%;
+        }
+        .table tbody tr td:last-child{
+            width: 15%;
+        }
+
+        .table tbody tr td:first-child{
+            border-radius: 0 0 0 10px;
+        }
+        .table tbody tr td:last-child{
+            border-radius: 0 0 10px 0;
+        }
+
+        .table tbody tr:hover{
+            background-color: #66666679;
         }
 
 
