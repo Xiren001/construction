@@ -23,7 +23,6 @@ class ServiceController extends Controller
             'category' => 'required|string',
             'service_name' => 'required|string',
             'price_min' => 'required|numeric',
-            'price_max' => 'required|numeric',
         ]);
 
         Service::create($validated);
@@ -36,7 +35,6 @@ class ServiceController extends Controller
             'category' => 'required|string',
             'service_name' => 'required|string',
             'price_min' => 'required|numeric',
-            'price_max' => 'required|numeric',
         ]);
     
         $service->update($validated);

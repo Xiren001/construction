@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('service_name');
             $table->text('description')->nullable();
             $table->decimal('price_min', 8, 2);
-            $table->decimal('price_max', 8, 2);
             $table->timestamps();
         });
     }

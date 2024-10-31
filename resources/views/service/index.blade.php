@@ -8,50 +8,40 @@
         <div class="container mx-auto mt-6">
 
             {{-- Search Input --}}
-            <div class="flex justify-start items-center mb-6 mt-6 gap-2">
+              <div class="flex justify-between items-center mb-6 mt-6 gap-2 px-2">
                 {{-- Button to open the modal --}}
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow" id="openServiceModal" style="background-color: #F77D24;">
-                    <svg fill="#ffffff" width="40px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <button class="bg-blue-500 hover:bg-blue-700 flex row text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow" id="openServiceModal" style="background-color: #EBBA5A;">
+                    <svg fill="#ffffff" width="35px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path wid d="M2,21h8a1,1,0,0,0,0-2H3.071A7.011,7.011,0,0,1,10,13a5.044,5.044,0,1,0-3.377-1.337A9.01,9.01,0,0,0,1,20,1,1,0,0,0,2,21ZM10,5A3,3,0,1,1,7,8,3,3,0,0,1,10,5ZM23,16a1,1,0,0,1-1,1H19v3a1,1,0,0,1-2,0V17H14a1,1,0,0,1,0-2h3V12a1,1,0,0,1,2,0v3h3A1,1,0,0,1,23,16Z" />
                     </svg>
+                    Add
                 </button>
 
                 <form action="{{ route('service.index') }}" method="GET" class="flex" style="gap:5px;">
                     <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                         class="form-input rounded-md border-gray-300" />
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded">
-                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </g>
-                        </svg>
-                    </button>
                 </form>
             </div>
 
             {{-- Services Section --}}
             <div class="overflow-x-auto w-full h-screen">
-                <table class="table-auto w-full text-center border-collapse whitespace-nowrap table-striped">
+                <table class="table">
                     <thead>
-                        <tr tabindex="0" class="focus:outline-none h-10 border border-gray-100 rounded">
-                            <th class="py-2 border-b-2 border-gray-200">Category</th>
-                            <th class="py-2 border-b-2 border-gray-200">Service Type</th>
-                            <th class="py-2 border-b-2 border-gray-200">Min Price</th>
-                            <th class="py-2 border-b-2 border-gray-200">Max Price</th>
-                            <th class="py-2 border-b-2 border-gray-200">Action</th>
+                        <tr>
+                            <th>Category</th>
+                            <th>Service Type</th>
+                            <th>Min Price</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach($services as $service)
-                        <tr class="odd:bg-gray-100 even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800 dark:border-gray-700">
-                            <td class="py-2 px-4 ">{{ $service->category }}</td>
-                            <td class="py-2 px-4 ">{{ $service->service_name }}</td>
-                            <td class="py-2 px-4 ">{{ $service->price_min }}</td>
-                            <td class="py-2 px-4 ">{{ $service->price_max }}</td>
-                            <td class="py-2 px-4 " style="display:flex; flex-direction:row; justify-content:center; align-items:center;">
+                        <tr>
+                            <td>{{ $service->category }}</td>
+                            <td>{{ $service->service_name }}</td>
+                            <td>{{ $service->price_min }}</td>
+                            <td>
 
                                 {{-- Read Button --}}
                                 <button class="bg-gray-600 text-black py-1 px-1 rounded-md hover:bg-gray-100"
@@ -115,12 +105,6 @@
                             <input type="number" name="price_min" id="priceMin" class="form-input mt-1 block w-full rounded-md border-gray-300" required min="0" step="0.01">
                         </div>
 
-                        {{-- Maximum Price --}}
-                        <div class="mt-4">
-                            <label for="priceMax" class="block text-sm font-medium text-gray-700">Maximum Price</label>
-                            <input type="number" name="price_max" id="priceMax" class="form-input mt-1 block w-full rounded-md border-gray-300" required min="0" step="0.01">
-                        </div>
-
                         {{-- Buttons --}}
                         <div class="mt-6 flex justify-end gap-2">
                             <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="closeServiceModal">Close</button>
@@ -148,7 +132,6 @@
                         <p><strong>Category:</strong> <span id="readServiceCategory"></span></p>
                         <p><strong>Service Type:</strong> <span id="readServiceType"></span></p>
                         <p><strong>Minimum Price:</strong> <span id="readServicePriceMin"></span></p>
-                        <p><strong>Maximum Price:</strong> <span id="readServicePriceMax"></span></p>
                     </div>
 
                     {{-- Close Button --}}
@@ -196,11 +179,6 @@
                             <input type="number" name="price_min" id="editServicePriceMin" class="form-input mt-1 block w-full rounded-md border-gray-300" required>
                         </div>
 
-                        <div class="mt-4">
-                            <label for="editServicePriceMax" class="block text-sm font-medium text-gray-700">Maximum Price</label>
-                            <input type="number" name="price_max" id="editServicePriceMax" class="form-input mt-1 block w-full rounded-md border-gray-300" required>
-                        </div>
-
                         <div class="mt-6 flex justify-end gap-2">
                             <button type="button" class="mr-4 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="closeEditServiceModalBtn">Cancel</button>
                             <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
@@ -241,11 +219,10 @@
         });
 
         // Open Read Service Modal
-        function openReadServiceModal(id, category, serviceType, priceMin, priceMax) {
+        function openReadServiceModal(id, category, serviceType, priceMin) {
             document.getElementById('readServiceCategory').textContent = category;
             document.getElementById('readServiceType').textContent = serviceType;
             document.getElementById('readServicePriceMin').textContent = priceMin;
-            document.getElementById('readServicePriceMax').textContent = priceMax;
             document.getElementById('readServiceModal').classList.remove('hidden');
         }
 
@@ -255,11 +232,10 @@
         });
 
         // Open Edit Service Modal
-        function openEditServiceModal(id, category, serviceType, priceMin, priceMax) {
+        function openEditServiceModal(id, category, serviceType, priceMin) {
             document.getElementById('editServiceCategory').value = category;
             document.getElementById('editServiceType').value = serviceType;
             document.getElementById('editServicePriceMin').value = priceMin;
-            document.getElementById('editServicePriceMax').value = priceMax;
             document.getElementById('editServiceForm').action = `/services/${id}`;
             document.getElementById('editServiceModal').classList.remove('hidden');
         }

@@ -10,7 +10,7 @@ class Service extends Model
     use HasFactory;
 
     // Define the fillable properties to allow mass assignment
-    protected $fillable = ['category', 'service_name', 'price_min', 'price_max'];
+    protected $fillable = ['category', 'service_name', 'price_min'];
 
     public function clients()
     {

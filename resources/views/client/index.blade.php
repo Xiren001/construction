@@ -8,27 +8,22 @@
         <div class="container mx-auto mt-6">
 
             {{-- Search Input --}}
-            <div class="flex justify-start items-center mb-6 mt-6 gap-2">
+            <div class="flex justify-between items-center mb-6 mt-6 gap-2 px-2">
+
+
                 {{-- Button to open the modal --}}
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow" id="openClientModal" style="background-color: #F77D24;">
-                    <svg fill="#ffffff" width="40px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white flex row font-semibold py-2 px-4 border border-gray-400 rounded shadow" id="openClientModal" style="background-color: #EBBA5A;">
+                    <svg fill="#ffffff" width="35px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path wid d="M2,21h8a1,1,0,0,0,0-2H3.071A7.011,7.011,0,0,1,10,13a5.044,5.044,0,1,0-3.377-1.337A9.01,9.01,0,0,0,1,20,1,1,0,0,0,2,21ZM10,5A3,3,0,1,1,7,8,3,3,0,0,1,10,5ZM23,16a1,1,0,0,1-1,1H19v3a1,1,0,0,1-2,0V17H14a1,1,0,0,1,0-2h3V12a1,1,0,0,1,2,0v3h3A1,1,0,0,1,23,16Z" />
                     </svg>
+                    Add
                 </button>
 
                 <form action="{{ route('client.index') }}" method="GET" class="flex" style="gap:5px;">
                     <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                         class="form-input rounded-md border-gray-300" />
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded">
-                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </g>
-                        </svg>
-                    </button>
                 </form>
+
             </div>
 
             <div class="flex flex-row gap-6">
@@ -67,7 +62,7 @@
                                 <td>
                                     {{-- Read Button --}}
                                     <button id="openReadClientModal" class="bg-gray-600 text-black py-1 px-1 rounded-md hover:bg-gray-100" data-client-id="{{ $client->id }}"
-                                        onclick="openReadClientModal( {{ $client->id }}, '{{ $client->name }}', '{{ $client->email }}', '{{ $client->phone }}', '{{ $client->date_of_birth }}', '{{ $client->sex }}', '{{ $client->marital_status }}', '{{ $client->nationality }}', '{{ $client->address_home }}', '{{ $client->address_office }}', '{{ $client->heart_disease }}', '{{ $client->kidney_problems }}', '{{ $client->liver_problems }}', '{{ $client->lung_problems }}', '{{ $client->asthma }}', '{{ $client->allergies }}', '{{ $client->allergy_details }}', '{{ $client->prolonged_bleeding }}', '{{ $client->blood_disease }}', '{{ $client->blood_disease_name }}', '{{ $client->high_blood_pressure }}', '{{ $client->takes_medication }}', '{{ $client->pregnant }}', '{{ $client->diabetic }}', '{{ $client->person_responsible_expenses }}', '{{ $client->visited_dentist }}', '{{ $client->referral_source }}', {{ $client->services->toJson() }} )">
+                                        onclick="openReadClientModal( {{ $client->id }}, '{{ $client->name }}', '{{ $client->email }}', '{{ $client->phone }}', '{{ $client->address_home }}', {{ $client->services->toJson() }} )">
                                         <svg fill="#000000" width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.6">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -84,7 +79,7 @@
                                     </button>
 
                                     {{-- Edit Button --}}
-                                    <button id="openEditClientModal" onclick="openEditClientModal( {{ $client->id }}, '{{ $client->name }}', '{{ $client->email }}', '{{ $client->phone }}', '{{ $client->date_of_birth }}', '{{ $client->sex }}', '{{ $client->marital_status }}', '{{ $client->nationality }}', '{{ $client->address_home }}', '{{ $client->address_office }}', '{{ $client->heart_disease }}', '{{ $client->kidney_problems }}', '{{ $client->liver_problems }}', '{{ $client->lung_problems }}', '{{ $client->asthma }}', '{{ $client->allergies }}', '{{ $client->allergy_details }}', '{{ $client->prolonged_bleeding }}', '{{ $client->blood_disease }}', '{{ $client->blood_disease_name }}', '{{ $client->high_blood_pressure }}', '{{ $client->takes_medication }}', '{{ $client->pregnant }}', '{{ $client->diabetic }}', '{{ $client->person_responsible_expenses }}', '{{ $client->visited_dentist }}', '{{ $client->referral_source }}' )">
+                                    <button id="openEditClientModal" onclick="openEditClientModal( {{ $client->id }}, '{{ $client->name }}', '{{ $client->email }}', '{{ $client->phone }}', '{{ $client->address_home }}' )">
                                         <svg width="20px" height="20px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.5880000000000001"></g>
@@ -115,13 +110,13 @@
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full create-con">
-                <div class="bg-white w-full">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-7xl">
+                <div class="bg-white w-full max-w-7xl">
                     <form action="{{ route('client.store')}}" method="POST">
                         @csrf
                         {{-- Page 1 --}}
                         <div id="createClientPage1" class="create-modal p-6">
-                            <div class="flex justify-center w-full">
+                            <div class="flex justify-center">
                                 <div class="create w-full max-w-4xl mx-auto p-4 bg-white rounded-md shadow-md">
                                     <h2 class="text-lg font-semibold text-gray-800">Personal Information</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -153,62 +148,55 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-
-                {{-- Page 2 --}}
-                <div id="createClientPage2" class="create-modal p-6 hidden">
-                    <div class="flex justify-center w-full">
-                        <div class="create w-full max-w-4xl mx-auto p-4 bg-white rounded-md shadow-md">
-                            <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                                <div class="mt-4">
-                                    <select id="createCategory" name="category" class="form-select mt-1 block w-full rounded-md border-gray-300">
-                                        <option value="">All Services</option>
-                                        @foreach($services->groupBy('category') as $category => $servicesInCategory)
-                                        <option value="{{ $category }}">{{ $category }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="mt-4">
-                                    <div class="mt-1 bg-white rounded-lg shadow p-4 flex" id="createServicesContainer" style="flex-direction: column;">
-                                        @foreach($services as $service)
-                                        <div class="flex row flex-wrap items-center mb-3 service-item p-2 rounded-lg hover:bg-blue-50 transition duration-200 ease-in-out" data-category="{{ $service->category }}">
-                                            <input type="checkbox" name="services[]" id="service_{{ $service->id }}" value="{{ $service->id }}" class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                                            <label for="service_{{ $service->id }}" class="ml-3 text-sm text-gray-800">
-                                                {{ $service->service_name }} - Php {{ $service->price_min }}
-                                            </label>
+                        {{-- Page 2 --}}
+                        <div id="createClientPage2" class="create-modal p-6 hidden w-full" style="width: 40rem;">
+                            <div class="flex justify-center w-full ">
+                                <div class="create w-full max-w-7xl mx-auto p-4 bg-white rounded-md shadow-md">
+                                    <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 w-full">
+                                        <div class="mt-4">
+                                            <select id="createCategory" name="category" class="form-select mt-1 block w-full rounded-md border-gray-300">
+                                                <option value="">All Services</option>
+                                                @foreach($services->groupBy('category') as $category => $servicesInCategory)
+                                                <option value="{{ $category }}">{{ $category }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        @endforeach
+                                        <div class="mt-4">
+                                            <div class="mt-1 bg-white rounded-lg shadow p-4 flex" id="createServicesContainer" style="flex-direction: column;">
+                                                @foreach($services as $service)
+                                                <div class="flex row flex-wrap items-center mb-3 service-item p-2 rounded-lg hover:bg-blue-50 transition duration-200 ease-in-out" data-category="{{ $service->category }}">
+                                                    <input type="checkbox" name="services[]" id="service_{{ $service->id }}" value="{{ $service->id }}" class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                                    <label for="service_{{ $service->id }}" class="ml-3 text-sm text-gray-800">
+                                                        {{ $service->service_name }} - Php {{ $service->price_min }}
+                                                    </label>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="mt-6 flex justify-end gap-2">
+                                            <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="createClientPrev">Previous</button>
+                                            <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
+                                        </div>
                                     </div>
-                                </div>
-
-
-                                <div class="mt-6 flex justify-end gap-2">
-                                    <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="createClientPrev">Previous</button>
-                                    <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-
-
-                </form>
             </div>
         </div>
-    </div>
     </div>
 
     @foreach($clients as $client)
     {{-- Edit Client Modal --}}
     <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="editClientModal">
-        <div class="flex items-center justify-center min-h-screen">
+    <div class="flex items-center justify-center min-h-screen">
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all  sm:w-full create-con">
-                <div class="bg-white p-6 w-full">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-7xl">
+                <div class="bg-white w-full max-w-7xl">
                     {{-- Form begins here --}}
                     <form id="editClientForm" action="{{ route('clients.update', $client->id) }}" method="POST">
                         @csrf
@@ -233,7 +221,7 @@
                                                 <input type="number" name="phone" id="editPhone" class="form-input mt-1 block w-full rounded-md border-gray-300" value="{{ $client->phone }}" required>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="flex row gap-4">
                                             <div class="w-full">
                                                 <label for="editAddressHome" class="block text-sm font-medium text-gray-700">Home Address</label>
@@ -251,9 +239,9 @@
 
 
                         {{-- Page 2 --}}
-                        <div id="editClientPage2" class="create-modal p-6 hidden">
-                            <div class="flex justify-center w-full">
-                                <div class="create w-full max-w-4xl mx-auto p-4 bg-white rounded-md shadow-md">
+                        <div id="editClientPage2" class="create-modal p-6 hidden" style="width: 40rem;">
+                        <div class="flex justify-center w-full ">
+                        <div class="create w-full max-w-7xl mx-auto p-4 bg-white rounded-md shadow-md">
                                     <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                                         <div class="mt-4">
