@@ -8,7 +8,7 @@
         <div class="container mx-auto mt-6">
 
             {{-- Search Input --}}
-            <div class="flex justify-between items-center mb-6 mt-6 gap-2 px-2">
+            <div class="flex justify-between items-center mb-6 mt-6 gap-2">
 
 
                 {{-- Button to open the modal --}}

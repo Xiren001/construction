@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PersonnelController;
 
 Route::get('/', function () {
     return view('landingpage');
@@ -30,6 +31,10 @@ Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name
 Route::put('/services/{service}', [ServiceController::class, 'update'])->name('service.update');
 Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
+Route::get('/personnel', [PersonnelController::class, 'index'])->name('personnel.index');
+Route::post('/personnel', [PersonnelController::class, 'store'])->name('personnel.store');
+Route::delete('/personnel/{id}/{type}', [PersonnelController::class, 'destroy'])->name('personnel.destroy');
+Route::put('/personnel/{id}/update', [PersonnelController::class, 'update'])->name('personnel.update');
 
 Route::middleware('auth')->group(function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
