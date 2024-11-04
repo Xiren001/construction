@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Doctor;
+use App\Models\Employee;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 
@@ -17,8 +17,8 @@ class PersonnelController extends Controller
         $sortBy = $request->input('sort_by', 'name');
         $sortDirection = $request->input('sort_direction', 'asc');
 
-        // Query doctors and staff
-        $doctors = Doctor::when($search, function ($query, $search) {
+        // Query employees and staff
+        $employees = Employee::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%");
         })->orderBy($sortBy, $sortDirection)->get();
@@ -28,19 +28,19 @@ class PersonnelController extends Controller
                 ->orWhere('email', 'like', "%{$search}%");
         })->orderBy($sortBy, $sortDirection)->get();
 
-        return view('personnel.index', compact('doctors', 'staff', 'search', 'sortBy', 'sortDirection'));
+        return view('personnel.index', compact('employees', 'staff', 'search', 'sortBy', 'sortDirection'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:doctors|unique:staff',
+            'email' => 'required|email|unique:employees|unique:staff',
             'position' => 'required|string',
         ]);
 
-        if ($request->position === 'doctor') {
-            Doctor::create($validated);
+        if ($request->position === 'employee') {
+            Employee::create($validated);
         } else {
             Staff::create($validated);
         }
@@ -50,8 +50,8 @@ class PersonnelController extends Controller
 
     public function destroy($id, $type)
     {
-        if ($type === 'doctor') {
-            Doctor::destroy($id);
+        if ($type === 'employee') {
+            Employee::destroy($id);
         } else {
             Staff::destroy($id);
         }
@@ -62,7 +62,7 @@ class PersonnelController extends Controller
 
     public function update(Request $request, $id)
     {
-        $personnel = Doctor::find($id) ?? Staff::find($id); // Find either doctor or staff by ID
+        $personnel = Employee::find($id) ?? Staff::find($id); // Find either Employee or staff by ID
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
