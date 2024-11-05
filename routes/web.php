@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PersonnelController;
+use App\Http\Controllers\BillingController;
+use App\Http\Controllers\LogController;
 
 Route::get('/', function () {
     return view('landingpage');
@@ -35,6 +37,14 @@ Route::get('/personnel', [PersonnelController::class, 'index'])->name('personnel
 Route::post('/personnel', [PersonnelController::class, 'store'])->name('personnel.store');
 Route::delete('/personnel/{id}/{type}', [PersonnelController::class, 'destroy'])->name('personnel.destroy');
 Route::put('/personnel/{id}/update', [PersonnelController::class, 'update'])->name('personnel.update');
+
+Route::post('/billing', [BillingController::class, 'store'])->name('billing.store');
+Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
+Route::post('/billing/{id}/confirm', [BillingController::class, 'confirmPayment']);
+
+Route::get('/logs', [BillingController::class, 'viewLogs'])->name('logs.index');
+Route::get('/logs/report', [LogController::class, 'generateReport'])->name('logs.report');
+
 
 Route::middleware('auth')->group(function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

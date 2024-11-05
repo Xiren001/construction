@@ -142,8 +142,9 @@
         }
 
         .table tbody tr:hover{
-            background-color: #66666679;
+            background-color: #66666689;
         }
+
 
 
     </style>

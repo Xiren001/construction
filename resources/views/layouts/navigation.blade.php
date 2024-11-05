@@ -31,6 +31,16 @@
                         {{ __('Services') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('billing.index')" :active="request()->routeIs('billing.index')">
+                        {{ __('Billing') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
+                        {{ __('Payment Logs') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
