@@ -99,9 +99,6 @@
                                         @csrf
                                         <input type="hidden" name="name" value="{{ $client->name }}">
                                         <input type="hidden" name="email" value="{{ $client->email }}">
-                                        @foreach ($client->services as $service)
-                                        <input type="hidden" name="price[]" value="{{ $service->price_min ?? 0 }}">
-                                        @endforeach
                                         <button
                                             class="bg-gray-600 text-black py-1 px-1 rounded-md hover:bg-gray-100"
                                             type="submit">
@@ -194,7 +191,7 @@
                                                 <div class="flex row flex-wrap items-center mb-3 service-item p-2 rounded-lg hover:bg-blue-50 transition duration-200 ease-in-out" data-category="{{ $service->category }}">
                                                     <input type="checkbox" name="services[]" id="service_{{ $service->id }}" value="{{ $service->id }}" class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                                                     <label for="service_{{ $service->id }}" class="ml-3 text-sm text-gray-800">
-                                                        {{ $service->service_name }} - Php {{ $service->price_min }}
+                                                        {{ $service->service_name }}
                                                     </label>
                                                 </div>
                                                 @endforeach
@@ -288,7 +285,7 @@
                                                         class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                                                         {{ in_array($service->id, $client->services->pluck('id')->toArray()) ? 'checked' : '' }}>
                                                     <label for="service_{{ $service->id }}" class="ml-3 text-sm text-gray-800">
-                                                        {{ $service->service_name }} - Php {{ $service->price_min }}
+                                                        {{ $service->service_name }}
                                                     </label>
                                                 </div>
                                                 @endforeach
@@ -341,7 +338,7 @@
                         <div class="mt-4">
                             <ul id="servicesList">
                                 @foreach($client->services as $service)
-                                <li>{{ $service->service_name }} - Php{{ $service->price_min }} </li>
+                                <li>{{ $service->service_name }}</li>
                                 @endforeach
                             </ul>
                         </div>

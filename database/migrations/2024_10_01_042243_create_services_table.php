@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('category');
             $table->string('service_name');
             $table->text('description')->nullable();
-            $table->decimal('price_min', 8, 2);
             $table->timestamps();
         });
     }

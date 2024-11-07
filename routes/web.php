@@ -8,6 +8,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\EmployeeController;
+
 
 Route::get('/', function () {
     return view('landingpage');
@@ -16,6 +18,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
 
 Route::resource('clients', ClientController::class);
 Route::get('/clients', [ClientController::class, 'index'])->name('client.index');

@@ -18,7 +18,9 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            if ($user->usertype == 'admin') {
+
+            // Allow only admins and employees to access the dashboard
+            if ($user->usertype == 'admin' || $user->usertype == 'employee') {
                 return redirect()->route('dashboard');
             } else {
                 return redirect()->route('landingpage');
@@ -40,12 +42,11 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        // Ensure only admin users can access the dashboard
-        if ($user->usertype != 'admin') {
+        // Ensure only admin and employee users can access the dashboard
+        if (!in_array($user->usertype, ['admin', 'employee'])) {
             return redirect()->route('landingpage');
         }
 
         return view('dashboard');
     }
-   
 }

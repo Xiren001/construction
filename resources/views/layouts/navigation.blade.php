@@ -11,36 +11,36 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('personnel.index')" :active="request()->routeIs('personnel.index')">
-                        {{ __('Personels') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('client.index')" :active="request()->routeIs('client.index')">
-                        {{ __('Client Records') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
-                        {{ __('Services') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('billing.index')" :active="request()->routeIs('billing.index')">
-                        {{ __('Billing') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
-                        {{ __('Payment Logs') }}
-                    </x-nav-link>
-                </div>
+                @if(Auth::check() && Auth::user()->usertype === 'employee')
+                    <!-- Show only Personnel Record for employees -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('personnel.index')" :active="request()->routeIs('personnel.index')">
+                            {{ __('Personnel Record') }}
+                        </x-nav-link>
+                    </div>
+                @else
+                    <!-- Show all other links for non-employees -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
+                            {{ __('Employees') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('client.index')" :active="request()->routeIs('client.index')">
+                            {{ __('Client Records') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
+                            {{ __('Services') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('billing.index')" :active="request()->routeIs('billing.index')">
+                            {{ __('Billing') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
+                            {{ __('Payment Logs') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->
@@ -52,7 +52,7 @@
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a 1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                         </button>
@@ -92,18 +92,27 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('CLient Records') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Services') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Personel') }}
-            </x-responsive-nav-link>
+            @if(Auth::check() && Auth::user()->usertype === 'employee')
+                <x-responsive-nav-link :href="route('personnel.index')" :active="request()->routeIs('personnel.index')">
+                    {{ __('Personnel Record') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('client.index')" :active="request()->routeIs('client.index')">
+                    {{ __('Client Records') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
+                    {{ __('Services') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('billing.index')" :active="request()->routeIs('billing.index')">
+                    {{ __('Billing') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
+                    {{ __('Payment Logs') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

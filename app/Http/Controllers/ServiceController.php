@@ -22,7 +22,6 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'category' => 'required|string',
             'service_name' => 'required|string',
-            'price_min' => 'required|numeric',
         ]);
 
         Service::create($validated);
@@ -34,7 +33,6 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'category' => 'required|string',
             'service_name' => 'required|string',
-            'price_min' => 'required|numeric',
         ]);
     
         $service->update($validated);

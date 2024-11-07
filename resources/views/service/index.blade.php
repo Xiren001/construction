@@ -30,7 +30,6 @@
                         <tr>
                             <th>Category</th>
                             <th>Service Type</th>
-                            <th>Service Cost</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -40,12 +39,11 @@
                         <tr>
                             <td>{{ $service->category }}</td>
                             <td>{{ $service->service_name }}</td>
-                            <td>{{ $service->price_min }}</td>
                             <td>
 
                                 {{-- Read Button --}}
                                 <button class="bg-gray-600 text-black py-1 px-1 rounded-md hover:bg-gray-100"
-                                    onclick="openReadServiceModal({{ $service->id }}, '{{ $service->category }}', '{{ $service->service_name }}', '{{ $service->price_min }}', '{{ $service->price_max }}')">
+                                    onclick="openReadServiceModal({{ $service->id }}, '{{ $service->category }}', '{{ $service->service_name }}')">
                                     <svg fill="#000000" width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.6">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -63,7 +61,7 @@
 
                                 {{-- Edit Button --}}
                                 <button class="bg-blue-600 text-black py-1 px-1 rounded-md hover:bg-gray-100"
-                                    onclick="openEditServiceModal({{ $service->id }}, '{{ $service->category }}', '{{ $service->service_name }}', '{{ $service->price_min }}', '{{ $service->price_max }}')">
+                                    onclick="openEditServiceModal({{ $service->id }}, '{{ $service->category }}', '{{ $service->service_name }}')">
                                     <svg width="20px" height="20px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.5880000000000001"></g>
@@ -134,12 +132,6 @@
                             <input type="text" name="service_name" id="serviceType" class="form-input mt-1 block w-full rounded-md border-gray-300" required>
                         </div>
 
-                        {{-- Minimum Price --}}
-                        <div class="mt-4">
-                            <label for="priceMin" class="block text-sm font-medium text-gray-700">Minimum Price</label>
-                            <input type="number" name="price_min" id="priceMin" class="form-input mt-1 block w-full rounded-md border-gray-300" required min="0" step="0.01">
-                        </div>
-
                         {{-- Buttons --}}
                         <div class="mt-6 flex justify-end gap-2">
                             <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="closeServiceModal">Close</button>
@@ -166,7 +158,6 @@
                     <div class="mt-4">
                         <p><strong>Category:</strong> <span id="readServiceCategory"></span></p>
                         <p><strong>Service Type:</strong> <span id="readServiceType"></span></p>
-                        <p><strong>Minimum Price:</strong> <span id="readServicePriceMin"></span></p>
                     </div>
 
                     {{-- Close Button --}}
@@ -217,11 +208,6 @@
                             <input type="text" name="service_name" id="editServiceType" class="form-input mt-1 block w-full rounded-md border-gray-300" required>
                         </div>
 
-                        <div class="mt-4">
-                            <label for="editServicePriceMin" class="block text-sm font-medium text-gray-700">Minimum Price</label>
-                            <input type="number" name="price_min" id="editServicePriceMin" class="form-input mt-1 block w-full rounded-md border-gray-300" required>
-                        </div>
-
                         <div class="mt-6 flex justify-end gap-2">
                             <button type="button" class="mr-4 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="closeEditServiceModalBtn">Cancel</button>
                             <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
@@ -262,10 +248,9 @@
         });
 
         // Open Read Service Modal
-        function openReadServiceModal(id, category, serviceType, priceMin) {
+        function openReadServiceModal(id, category, serviceType) {
             document.getElementById('readServiceCategory').textContent = category;
             document.getElementById('readServiceType').textContent = serviceType;
-            document.getElementById('readServicePriceMin').textContent = priceMin;
             document.getElementById('readServiceModal').classList.remove('hidden');
         }
 
@@ -275,10 +260,9 @@
         });
 
         // Open Edit Service Modal
-        function openEditServiceModal(id, category, serviceType, priceMin) {
+        function openEditServiceModal(id, category, serviceType) {
             document.getElementById('editServiceCategory').value = category;
             document.getElementById('editServiceType').value = serviceType;
-            document.getElementById('editServicePriceMin').value = priceMin;
             document.getElementById('editServiceForm').action = `/services/${id}`;
             document.getElementById('editServiceModal').classList.remove('hidden');
         }
