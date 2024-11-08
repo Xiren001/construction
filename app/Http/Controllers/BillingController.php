@@ -14,31 +14,15 @@ class BillingController extends Controller
         $sortBy = request('sort_by', 'name');
         $sortDirection = request('sort_direction', 'asc');
 
-        // Calculate total price for all billings (or you can adjust for specific client if needed)
-        $totalPrice = $this->calculateTotalPrice();
-
         $billings = Billing::where('hidden', false) // Only non-hidden records
-        ->when($search, function ($query, $search) {
-            return $query->where('name', 'like', "%{$search}%")
-                         ->orWhere('email', 'like', "%{$search}%");
-        })
-        ->orderBy($sortBy, $sortDirection) // Sort by the specified column and direction
-        ->get()->all();
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%")
+                             ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->orderBy($sortBy, $sortDirection) // Sort by the specified column and direction
+            ->get()->all();
 
-        return view('billing.index', compact('billings', 'search', 'sortBy', 'sortDirection', 'totalPrice'));
-    }
-
-    private function calculateTotalPrice()
-    {
-        // Adjust this to calculate total for relevant services
-        $billings = Billing::all();
-        $total = 0;
-
-        foreach ($billings as $billing) {
-            $total += $billing->price; // Assuming `price` holds the service amount
-        }
-
-        return $total;
+        return view('billing.index', compact('billings', 'search', 'sortBy', 'sortDirection'));
     }
 
     public function store(Request $request)
@@ -47,8 +31,6 @@ class BillingController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'price' => 'required|array', // Ensure it's an array
-            'price.*' => 'numeric', // Validate each price in the array
         ]);
 
         // Check if a record with the same name and email already exists
@@ -60,14 +42,10 @@ class BillingController extends Controller
             return redirect()->back()->with('error', 'Information already exists.');
         }
 
-        // Sum all the prices from the request
-        $totalPrice = array_sum($request->price);
-
-        // Create a single billing record with the total price
+        // Create a single billing record
         Billing::create([
             'name' => $request->name,
             'email' => $request->email,
-            'price' => $totalPrice,
         ]);
 
         return redirect()->back()->with('success', 'Successfully Recorded.');
@@ -82,7 +60,6 @@ class BillingController extends Controller
         \DB::table('logs')->insert([
             'name' => $billing->name,
             'email' => $billing->email,
-            'price' => $billing->price,
             'payment_method' => $request->paymentMethod,
             'created_at' => now(),
             'updated_at' => now(),

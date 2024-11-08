@@ -197,6 +197,17 @@
                                                 @endforeach
                                             </div>
                                         </div>
+
+                                        <div class="mt-4">
+                                            <label for="employee_id">Select Employee</label>
+                                            <select name="employee_id" id="employee_id" class="form-select mt-1 block w-full rounded-md border-gray-300">
+                                                <option value="">Select an Employee</option>
+                                                @foreach($employees as $employee)
+                                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                         <div class="mt-6 flex justify-end gap-2">
                                             <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="createClientPrev">Previous</button>
                                             <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>

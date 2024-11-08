@@ -12,7 +12,6 @@ class CreateBillingsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->decimal('price', 8, 2);
             $table->timestamps();
             $table->boolean('hidden')->default(false);
         });

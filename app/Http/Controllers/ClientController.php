@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -11,6 +12,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $services = Service::all();
+        $employees = User::where('usertype', 'employee')->get(); // Fetch employees from User model
         $search = $request->input('search');
         $sortBy = $request->input('sort_by', 'name');
         $sortDirection = $request->input('sort_direction', 'asc');
@@ -18,9 +20,8 @@ class ClientController extends Controller
         $clients = Client::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%");
         })->orderBy($sortBy, $sortDirection)->get()->all();
-        return view('client.index', compact('clients', 'services', 'search', 'sortBy', 'sortDirection'));
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-
+        return view('client.index', compact('clients', 'services', 'employees', 'search', 'sortBy', 'sortDirection'));
+    }
 
     public function store(Request $request)
     {
@@ -28,41 +29,44 @@ class ClientController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email|unique:clients,email',
             'phone' => 'required|numeric',
-            'address_home' => 'required|string', // New validation
-
-            'services' => 'nullable|array', // Validate that services are an array
-            'services.*' => 'exists:services,id' // Validate each service exists in the services table
+            'address_home' => 'required|string',
+            'employee_id' => 'nullable|exists:employees,id', // Validate employee ID
+            'services' => 'nullable|array',
+            'services.*' => 'exists:services,id'
         ]);
-
-        // Create the client
+    
+        // Create the client, including employee assignment
         $client = Client::create($validated);
-
-        // Attach the selected services to the client
+    
+        // Attach selected services to the client
         if (!empty($request->services)) {
             $client->services()->attach($request->services);
         }
-
+    
         return redirect()->back()->with('success', 'Client added successfully.');
     }
+    
 
 
     public function update(Request $request, $id)
     {
         $client = Client::findOrFail($id);
-
-        // Update the client's details
-        $client->update($request->only('name', 'email', 'phone', 'address_home'));
-
-        // Sync services
+    
+        $request->validate([
+            'employee_id' => 'nullable|exists:employees,id',
+        ]);
+    
+        $client->update($request->only('name', 'email', 'phone', 'address_home', 'employee_id'));
+    
         if ($request->has('services')) {
             $client->services()->sync($request->services);
         } else {
-            // If no services are selected, detach all
             $client->services()->detach();
         }
-
+    
         return redirect()->route('client.index')->with('success', 'Client updated successfully');
     }
+    
 
 
 
@@ -74,9 +78,11 @@ class ClientController extends Controller
 
     public function create()
     {
-        $services = Service::all(); // Fetch all services
-        return view('client.create', compact('services'));
+        $services = Service::all(); 
+        $employees = User::where('usertype', 'employee')->get(); // Fetch employees from User model
+        return view('client.create', compact('services', 'employees'));
     }
+    
 
     public function destroy(Client $client)
     {
