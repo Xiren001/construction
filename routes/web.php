@@ -9,6 +9,7 @@ use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\WorkloadController;
 
 
 Route::get('/', function () {
@@ -20,6 +21,9 @@ Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware(['aut
 
 
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+
+Route::post('/workload', [WorkloadController::class, 'store'])->name('workload.store');
+
 
 Route::resource('clients', ClientController::class);
 Route::get('/clients', [ClientController::class, 'index'])->name('client.index');

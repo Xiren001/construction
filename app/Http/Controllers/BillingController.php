@@ -51,39 +51,4 @@ class BillingController extends Controller
         return redirect()->back()->with('success', 'Successfully Recorded.');
     }
 
-    public function confirmPayment($id, Request $request)
-    {
-        // Find the billing record
-        $billing = Billing::findOrFail($id);
-
-        // Insert the billing data into the logs table
-        \DB::table('logs')->insert([
-            'name' => $billing->name,
-            'email' => $billing->email,
-            'payment_method' => $request->paymentMethod,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        // Hide the billing entry instead of deleting it
-        $billing->hidden = true;
-        $billing->save();
-
-        return response()->json(['success' => true]);
-    }
-
-    public function viewLogs(Request $request)
-    {
-        $search = $request->input('search');
-
-        $logs = \DB::table('logs')
-            ->when($search, function ($query, $search) {
-                return $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('payment_method', 'like', "%{$search}%");
-            })
-            ->get();
-
-        return view('logs.index', compact('logs'));
-    }
 }

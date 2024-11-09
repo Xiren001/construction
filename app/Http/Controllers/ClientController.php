@@ -16,7 +16,7 @@ class ClientController extends Controller
         $search = $request->input('search');
         $sortBy = $request->input('sort_by', 'name');
         $sortDirection = $request->input('sort_direction', 'asc');
-    
+
         $clients = Client::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%");
         })->orderBy($sortBy, $sortDirection)->get()->all();
@@ -30,21 +30,23 @@ class ClientController extends Controller
             'email' => 'required|string|email|unique:clients,email',
             'phone' => 'required|numeric',
             'address_home' => 'required|string',
-            'employee_id' => 'nullable|exists:employees,id', // Validate employee ID
+            'employee_id' => 'nullable|exists:users,id', // Correct reference to 'users' table
             'services' => 'nullable|array',
             'services.*' => 'exists:services,id'
         ]);
     
-        // Create the client, including employee assignment
-        $client = Client::create($validated);
+        $client = new Client($validated);
+        $client->employee_id = $request->input('employee_id'); // Explicitly set employee_id
+        $client->save();
     
-        // Attach selected services to the client
+        // Attach services if provided
         if (!empty($request->services)) {
             $client->services()->attach($request->services);
         }
     
         return redirect()->back()->with('success', 'Client added successfully.');
     }
+    
     
 
 
@@ -53,10 +55,16 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
     
         $request->validate([
-            'employee_id' => 'nullable|exists:employees,id',
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:clients,email,' . $id,
+            'phone' => 'required|numeric',
+            'address_home' => 'required|string',
+            'employee_id' => 'nullable|exists:users,id'
         ]);
     
-        $client->update($request->only('name', 'email', 'phone', 'address_home', 'employee_id'));
+        $client->fill($request->only(['name', 'email', 'phone', 'address_home', 'employee_id']));
+        $client->employee_id = $request->input('employee_id'); // Explicitly set employee_id
+        $client->save();
     
         if ($request->has('services')) {
             $client->services()->sync($request->services);
@@ -69,20 +77,27 @@ class ClientController extends Controller
     
 
 
-
     public function show($id)
     {
         $client = Client::with(['services', 'categorys'])->findOrFail($id);
         return view('client.show', compact('client'));
     }
 
+
     public function create()
     {
-        $services = Service::all(); 
-        $employees = User::where('usertype', 'employee')->get(); // Fetch employees from User model
-        return view('client.create', compact('services', 'employees'));
+        // Fetch IDs of employees who are already assigned to a client
+        $assignedEmployeeIds = Client::whereNotNull('employee_id')->pluck('employee_id')->toArray();
+
+        // Get only unassigned employees by excluding assignedEmployeeIds
+        $employees = User::where('usertype', 'employee')
+            ->whereNotIn('id', $assignedEmployeeIds)
+            ->get();
+
+        $services = Service::all(); // Fetch all services as usual
+        return view('client.create', compact('employees', 'services'));
     }
-    
+
 
     public function destroy(Client $client)
     {
