@@ -16,4 +16,10 @@ class Service extends Model
     {
         return $this->belongsToMany(Client::class, 'client_service');
     }
+
+    public function workloads()
+    {
+        return $this->belongsToMany(Workload::class, 'service_workload', 'service_id', 'workload_id');
+    }
+    
 }

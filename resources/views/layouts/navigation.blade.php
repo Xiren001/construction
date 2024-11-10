@@ -17,6 +17,9 @@
                         <x-nav-link :href="route('personnel.index')" :active="request()->routeIs('personnel.index')">
                             {{ __('Personnel Record') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('workload.index')" :active="request()->routeIs('workload.index')">
+                            {{ __('work') }}
+                        </x-nav-link>
                     </div>
                 @else
                     <!-- Show all other links for non-employees -->
@@ -33,12 +36,7 @@
                         <x-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
                             {{ __('Services') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('billing.index')" :active="request()->routeIs('billing.index')">
-                            {{ __('Billing') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
-                            {{ __('Payment Logs') }}
-                        </x-nav-link>
+                       
                     </div>
                 @endif
             </div>
@@ -105,12 +103,6 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
                     {{ __('Services') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('billing.index')" :active="request()->routeIs('billing.index')">
-                    {{ __('Billing') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
-                    {{ __('Payment Logs') }}
                 </x-responsive-nav-link>
             @endif
         </div>

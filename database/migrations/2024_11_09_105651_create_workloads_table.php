@@ -14,7 +14,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');       // Client's name
             $table->string('email');      // Client's email
-            $table->json('services');     // Store services as JSON
             $table->unsignedBigInteger('employee_id')->nullable();  // Reference to an employee, set to nullable
     
             // Foreign keys

@@ -17,4 +17,11 @@ class Client extends Model
     {
         return $this->belongsToMany(Service::class, 'client_service');
     }
+
+    public function employee()
+{
+    return $this->belongsTo(User::class, 'employee_id');
+}
+
+
 }

@@ -47,8 +47,6 @@ class ClientController extends Controller
         return redirect()->back()->with('success', 'Client added successfully.');
     }
     
-    
-
 
     public function update(Request $request, $id)
     {
