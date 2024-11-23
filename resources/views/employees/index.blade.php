@@ -16,15 +16,17 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 50%; text-align:center;">Name</th>
-                                <th style="width: 50%; text-align:center;">Email</th>
+                                <th style="width: 33%; text-align:center;">Name</th>
+                                <th style="width: 33%; text-align:center;">Email</th>
+                                <th style="width: 33%; text-align:center;">Position</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($employees as $employee)
                             <tr>
-                                <td style="width: 50%; text-align:center;">{{ $employee->name }}</td>
-                                <td style="width: 50%; text-align:center;">{{ $employee->email }}</td>
+                                <td style="width: 33%; text-align:center;">{{ $employee->name }}</td>
+                                <td style="width: 33%; text-align:center;">{{ $employee->email }}</td>
+                                <td style="width: 33%; text-align:center;">{{ $employee->usertype }}</td>
                             </tr>
                             @empty
                             <tr>

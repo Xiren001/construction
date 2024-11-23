@@ -8,6 +8,9 @@ body {
   font-size: clamp(1rem, 2.5vw, 2rem);
   padding: 0 !important;
   height: 100dvh;
+  background-image: radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0), radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0);
+  background-size: 3rem 3rem; /* Ensures dots are 2rem apart */
+  background-position: 1rem 1rem, 1rem 1rem;
 }
 
 .nav-div {
@@ -22,8 +25,8 @@ nav {
   padding: 1rem;
   border-radius: 15px;
   backdrop-filter: blur(5px);
-  background-color: transparent;
-  border-radius: 16px;
+  background-color: white;
+  border-radius: 10px;
 }
 
 nav ul {
@@ -102,9 +105,9 @@ nav li:nth-child(7) {
 }
 
 .login-btn {
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #0A3247;
-  height: 45px;
+  height: 35px;
 }
 
 .login-btn a {
@@ -139,49 +142,40 @@ nav li:nth-child(7) {
   padding: 6% 13% !important;
 }
 
-iframe {
-  height: 130%;
-  width: 100%;
-}
-
-.main-app {
-  width: 100%;
-  height: 100%;
-}
 
 .main1 {
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   gap: 1rem;
-  padding: 4rem 20rem 4rem 0;
+  padding: 4rem 0 4rem 0;
 }
 
 .main-h1 {
-  color: #000000;
+  color: #ffffff;
   display: inline-block;
-  font-size: clamp(2rem, 5vw, 4.75rem);
-  line-height: 100%;
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  line-height: 180%;
   box-sizing: border-box;
+  font-weight: bold;
 
 }
 
 .main-p {
   letter-spacing: -.019em;
-  color: #545454;
+  color: #ffffff;
   max-width: 640px;
-  font-family: Inter, sans-serif;
-  font-size: clamp(.85rem, 3vw, 1.25rem);
-  line-height: 140%;
-  text-align: left;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  line-height: 120%;
+  text-align: center;
 }
 
 .btn-appointment {
   grid-column-gap: 16px;
-  grid-row-gap: 16px;
+  grid-row-gap: 32px;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 80px;
@@ -192,7 +186,7 @@ iframe {
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   color: #fff;
-  background-color: #0A3247;
+  background-color: #EBBA5A;
   border-radius: 12px;
   justify-content: center;
   align-items: center;
@@ -321,12 +315,53 @@ iframe {
 /* main content */
 
 .main-content {
-  background-color: #0A3247;
+  background-color: #ffffff;
   width: 100%;
-  height: 65vh;
+  height: 45vh;
   z-index: -1;
   padding: 0 13% !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  background-image: radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0), radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0);
+  background-size: 3rem 3rem; /* Ensures dots are 2rem apart */
+  background-position: 1rem 1rem, 1rem 1rem;
+  
+
 }
+
+.box{
+  background-color: #ffffff;
+  width: 400px;
+  height: 400px;
+  margin-top: -4rem;
+  padding: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  text-align: start;
+  gap: 1rem;
+}
+
+.box-image{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.box h3{
+  font-size: clamp(1.5rem, 1.8vw, 3rem);
+  line-height: 1.2; 
+}
+
+  
+ .box p {
+    font-size: clamp(1rem, .5vw, 1.5rem); 
+    line-height: 1.6;
+  }
+  
+
 
 
 
@@ -339,6 +374,9 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0), radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0);
+  background-size: 3rem 3rem; /* Ensures dots are 2rem apart */
+  background-position: 1rem 1rem, 1rem 1rem;
 }
 
 .marquee-wrapper {
@@ -346,9 +384,9 @@ iframe {
   width: 100%;
 }
 
-.marquee-wrapper h4 {
+.marquee-wrapper h1 {
   padding: 0 3rem 3rem 3rem;
-  color: #8e8e8e;
+  color: #000000;
 }
 
 .marquee-wrapper .container-fluid {
@@ -390,6 +428,7 @@ iframe {
 }
 
 .marquee-item {
+  background-color: white;
   width: 500px;
   height: 200px;
   display: flex;
@@ -530,6 +569,8 @@ ul {
   .main {
     padding-top: 25% !important;
     background: none !important;
+    background-color: #0A3247 !important;
+    height: 95vh;
   }
 
   .main-appointment {
@@ -538,10 +579,6 @@ ul {
   }
 
   .main-app {
-    height: 100%;
-  }
-
-  iframe {
     height: 100%;
   }
 
@@ -603,12 +640,24 @@ ul {
   .menu-button {
     display: block;
   }
-
-
   .main-content {
     padding: 0 5% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150vh;
+  }
+  
+  .box{
+    width: 350px;
+    height: 400px;
+    margin-top:0;
   }
 
+  .main-content2{
+    display: none;
+  }
 
   .marquee-wrapper {
     display: none;

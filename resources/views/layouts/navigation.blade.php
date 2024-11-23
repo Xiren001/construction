@@ -14,11 +14,8 @@
                 @if(Auth::check() && Auth::user()->usertype === 'employee')
                     <!-- Show only Personnel Record for employees -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('personnel.index')" :active="request()->routeIs('personnel.index')">
-                            {{ __('Personnel Record') }}
-                        </x-nav-link>
                         <x-nav-link :href="route('workload.index')" :active="request()->routeIs('workload.index')">
-                            {{ __('work') }}
+                            {{ __('Work Load') }}
                         </x-nav-link>
                     </div>
                 @else
@@ -91,8 +88,8 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @if(Auth::check() && Auth::user()->usertype === 'employee')
-                <x-responsive-nav-link :href="route('personnel.index')" :active="request()->routeIs('personnel.index')">
-                    {{ __('Personnel Record') }}
+                <x-responsive-nav-link :href="route('workload.index')" :active="request()->routeIs('workload.index')">
+                    {{ __('Work Load') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

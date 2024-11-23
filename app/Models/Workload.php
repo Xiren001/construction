@@ -9,9 +9,12 @@ class Workload extends Model
 {
     use HasFactory;
 
-    // app/Models/Workload.php
-    protected $fillable = ['name', 'email', 'employee_id', 'client_id', 'status'];
-
+    protected $fillable = [
+        'name',
+        'email',
+        'employee_id',
+        'status',
+    ];
 
     protected $casts = [
         'services' => 'array',
@@ -22,7 +25,6 @@ class Workload extends Model
         return $this->belongsTo(Client::class);
     }
 
-    // app/Models/Workload.php
     public function employee()
     {
         return $this->belongsTo(User::class, 'employee_id');

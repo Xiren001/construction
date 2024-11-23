@@ -1,4 +1,3 @@
-<!-- resources/views/workload/index.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-black-800 dark:text-black-200 leading-tight">
@@ -23,16 +22,18 @@
                         <tbody>
                             @forelse ($workloads as $workload)
                             <tr>
-                                <td style="text-align:left; width:15%"">{{ $workload->name }}</td>
+                                <td style="text-align:left; width:15%">{{ $workload->name }}</td>
                                 <td style="text-align:left;  width:15%">{{ $workload->email }}</td>
                                 <td style="text-align:left;  width:15%">{{ $workload->employee->name ?? 'No Employee' }}</td>
                                 <td style="text-align:left;  width:15%">
                                     @if ($workload->services && $workload->services->isNotEmpty())
-                                    @foreach ($workload->services as $service)
-                                    <li>{{ $service->service_name }}</li>
-                                    @endforeach
+                                        <ul>
+                                            @foreach ($workload->services as $service)
+                                                <li>{{ $service->service_name }}</li>
+                                            @endforeach
+                                        </ul>
                                     @else
-                                    <span>No Services Assigned</span>
+                                        <span>No Services Assigned</span>
                                     @endif
                                 </td>
                                 <td style="text-align:left;  width:15%">
@@ -50,7 +51,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     No Workload found.
                                 </td>
                             </tr>

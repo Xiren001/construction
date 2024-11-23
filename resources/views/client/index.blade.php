@@ -99,12 +99,9 @@
                                         @csrf
                                         <input type="hidden" name="name" value="{{ $client->name }}">
                                         <input type="hidden" name="email" value="{{ $client->email }}">
-
                                         @foreach($client->services as $service)
                                         <input type="hidden" name="services[]" value="{{ $service->id }}">
                                         @endforeach
-
-
                                         <input type="hidden" name="employee" value="{{ $client->employee_id }}"> <!-- Assuming there's an employee ID -->
 
                                         <button
@@ -175,6 +172,14 @@
                                     <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 w-full">
                                         <div class="mt-4">
+                                            <select name="employee_id" id="employee_id" class="form-select mt-1 block w-full rounded-md border-gray-300">
+                                                <option value="">Select Employee</option>
+                                                @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mt-4">
                                             <select id="createCategory" name="category" class="form-select mt-1 block w-full rounded-md border-gray-300">
                                                 <option value="">All Services</option>
                                                 @foreach($services->groupBy('category') as $category => $servicesInCategory)
@@ -194,17 +199,6 @@
                                                 @endforeach
                                             </div>
                                         </div>
-
-                                        <div class="mt-4">
-                                            <label for="employee_id">Select Employee</label>
-                                            <select name="employee_id" id="employee_id" class="form-select mt-1 block w-full rounded-md border-gray-300">
-                                                <option value="">Select Employee</option>
-                                                @foreach ($employees as $employee)
-                                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
                                         <div class="mt-6 flex justify-end gap-2">
                                             <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="createClientPrev">Previous</button>
                                             <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
@@ -276,7 +270,17 @@
                                     <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                                         <div class="mt-4">
+                                            <select name="employee_id" id="editEmployeeName" class="form-select mt-1 block w-full rounded-md border-gray-300">
+                                                <option value="" disabled>Select Employee</option>
+                                                @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}" {{ $client->employee_id == $employee->id ? 'selected' : '' }}>
+                                                    {{ $employee->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
+                                        <div class="mt-4">
                                             <select id="editCategory" name="editcategory" class="form-select mt-1 block w-full rounded-md border-gray-300">
                                                 <option value=""></option>
                                                 @foreach($services->groupBy('category') as $category => $servicesInCategory)
@@ -299,19 +303,6 @@
                                                 @endforeach
                                             </div>
                                         </div>
-
-                                        <div class="mt-4">
-                                            <label for="editEmployeeName">Select Employee</label>
-                                            <select name="employee_id" id="editEmployeeName" class="form-select mt-1 block w-full rounded-md border-gray-300">
-                                                <option value="">Select Employee</option>
-                                                @foreach ($employees as $employee)
-                                                <option value="{{ $employee->id }}" {{ $client->employee_id == $employee->id ? 'selected' : '' }}>
-                                                    {{ $employee->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
                                         <div class="mt-6 flex justify-end gap-2">
                                             <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="editClientPrev">Previous</button>
                                             <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
