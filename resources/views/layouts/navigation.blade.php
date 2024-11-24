@@ -33,6 +33,10 @@
                         <x-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
                             {{ __('Services') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('completed_works.index')" :active="request()->routeIs('completed_works.index')">
+                            {{ __('Completed Work') }}
+                        </x-nav-link>
                        
                     </div>
                 @endif
@@ -100,6 +104,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
                     {{ __('Services') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('completed_works.index')" :active="request()->routeIs('completed_works.index')">
+                    {{ __('Completed Work') }}
                 </x-responsive-nav-link>
             @endif
         </div>

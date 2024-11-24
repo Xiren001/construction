@@ -41,6 +41,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('service.edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('service.update');
     Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('service.destroy');
+
+    Route::patch('/workload/{id}/status', [WorkloadController::class, 'updateStatus'])->name('workload.updateStatus');
+    Route::post('/workload/checklist', [WorkloadController::class, 'submitChecklist'])->name('workload.submitChecklist');
+    Route::get('/completed-works', [WorkloadController::class, 'indexCompletedWorks'])->name('completed_works.index');
+    Route::get('/completed-works/{id}', [WorkloadController::class, 'showCompletedWork'])->name('completed_works.show');
+
 });
 
 require __DIR__ . '/auth.php';

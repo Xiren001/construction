@@ -100,6 +100,10 @@
             color: white;
         }
 
+        .table tbody tr{
+            background-color: #ffffff;
+        }
+
         .table thead tr th:first-child{
             border-radius: 10px 0 0 0;
         }
@@ -145,7 +149,11 @@
             background-color: #66666689;
         }
 
-
+body{
+    background-image: radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0), radial-gradient(rgba(38, 37, 34, 0.25) 3%, transparent 0);
+  background-size: 3rem 3rem; /* Ensures dots are 2rem apart */
+  background-position: 1rem 1rem, 1rem 1rem;
+}
 
     </style>
 

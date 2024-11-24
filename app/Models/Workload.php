@@ -34,4 +34,14 @@ class Workload extends Model
     {
         return $this->belongsToMany(Service::class, 'service_workload', 'workload_id', 'service_id');
     }
+
+    public function completedWork()
+    {
+        return $this->hasOne(CompletedWork::class, 'workload_id');
+    }
+
+    public function completedWorks()
+    {
+        return $this->hasMany(CompletedWork::class, 'workload_id', 'id');
+    }
 }
