@@ -14,6 +14,7 @@ class Workload extends Model
         'email',
         'employee_id',
         'status',
+        'hidden',
     ];
 
     protected $casts = [
@@ -30,6 +31,7 @@ class Workload extends Model
         return $this->belongsTo(User::class, 'employee_id');
     }
 
+    // In Workload model
     public function services()
     {
         return $this->belongsToMany(Service::class, 'service_workload', 'workload_id', 'service_id');

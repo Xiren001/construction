@@ -9,11 +9,7 @@ class CompletedWork extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'workload_id',
-        'checklist',
-        'photo',
-    ];
+    protected $fillable = ['workload_id', 'workload_name', 'employee_name', 'checklist', 'photo'];
 
     /**
      * Relationship to Workload

@@ -10,7 +10,10 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'phone', 'address_home'
+        'name',
+        'email',
+        'phone',
+        'address_home'
     ];
 
     public function services()
@@ -19,9 +22,7 @@ class Client extends Model
     }
 
     public function employee()
-{
-    return $this->belongsTo(User::class, 'employee_id');
-}
-
-
+    {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
 }

@@ -8,60 +8,33 @@
                 <table class="tables">
                     <thead>
                         <tr>
-                            <th style="text-align:left; width:15%">Name</th>
-                            <th style="text-align:left; width:15%">Email</th>
-                            <th style="text-align:left; width:15%">Employee</th>
-                            <th style="text-align:left; width:15%">Services</th>
-                            <th style="text-align:left; width:15%">Status</th>
+                            <th style=" text-align:left; width: 20%;">Name</th>
+                            <th style=" text-align:left; width: 20%;">Email</th>
+                            <th style=" text-align:left; width: 20%;">Employee</th>
+                            <th style=" text-align:left; width: 20%;">Services</th>
+                            <th style=" text-align:left; width: 20%;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($workloads as $workload)
                         <tr>
-                            <td style="text-align:left; width:15%">{{ $workload->name }}</td>
-                            <td style="text-align:left; width:15%">{{ $workload->email }}</td>
-                            <td style="text-align:left; width:15%">{{ $workload->employee->name ?? 'No Employee' }}</td>
-                            <td style="text-align:left; width:15%">
-                                @if ($workload->services && $workload->services->isNotEmpty())
-                                <ul>
-                                    @foreach ($workload->services as $service)
-                                    <li>{{ $service->service_name }}</li>
-                                    @endforeach
-                                </ul>
-                                @else
-                                <span>No Services Assigned</span>
-                                @endif
+                            <td style=" text-align:left; width: 20%;">{{ $workload->name }}</td>
+                            <td style=" text-align:left; width: 20%;">{{ $workload->email }}</td>
+                            <td style=" text-align:left; width: 20%;">{{ $workload->employee->name ?? 'No Employee' }}</td>
+                            <td style=" text-align:left; width: 20%;">
+                                @foreach($services as $service)
+                                <span>
+                                    {{ $service->service_name }}
+                                </span>
+                                @endforeach
                             </td>
-                            <td style="text-align:left; width:15%">
-                                <span>{{ $workload->status }}</span> <!-- Display status as text -->
+                            <td style=" text-align:left; width: 20%;">
+                                <span>{{ $workload->status }}</span>
                             </td>
                         </tr>
-
-                        <!-- Show checklist and photo if the workload is completed -->
-                        @if ($workload->status === 'Completed' && $workload->completedWork)
-                        <tr>
-                            <td colspan="5" style="text-align:left; background-color: #f9f9f9;">
-                                <strong>Checklist:</strong>
-                                <ul>
-                                    @foreach (json_decode($workload->completedWork->checklist, true) as $item => $status)
-                                    <li>{{ ucfirst($item) }}: {{ $status ? '✔️' : '❌' }}</li>
-                                    @endforeach
-                                </ul>
-                                <strong>Photo:</strong>
-                                <div style="margin-top: 10px;">
-                                    <img src="{{ asset('storage/' . $workload->completedWork->photo) }}"
-                                        alt="Completed Work Photo"
-                                        style="max-width: 200px; border: 1px solid #ddd; border-radius: 5px;">
-
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
                         @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                No Request found.
-                            </td>
+                            <td colspan="5">No Workload found.</td>
                         </tr>
                         @endforelse
                     </tbody>
