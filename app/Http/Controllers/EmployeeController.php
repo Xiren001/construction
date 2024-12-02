@@ -12,6 +12,13 @@ class EmployeeController extends Controller
     $employees = User::where('usertype', 'employee')->get();
     return view('employees.index', compact('employees'));
 }
+
+public function showDashboard()
+{
+    $employeeCount = User::where('usertype', 'employee')->count();
+    return view('dashboard', compact('employeeCount'));
+}
+
     
 }
 

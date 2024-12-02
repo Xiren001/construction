@@ -47,6 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/completed-works', [WorkloadController::class, 'indexCompletedWorks'])->name('completed_works.index');
     Route::get('/completed-works/{id}', [WorkloadController::class, 'showCompletedWork'])->name('completed_works.show');
 
+    Route::get('/dashboard', [EmployeeController::class, 'showDashboard'])->name('dashboard');
+    Route::get('/dashboard', [ClientController::class, 'showDashboard'])->name('dashboard');
+    Route::get('/dashboard', [WorkloadController::class, 'showDashboard'])->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\WorkloadController::class, 'showDashboard'])->name('dashboard');
+
+
 });
 
 require __DIR__ . '/auth.php';

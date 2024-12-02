@@ -23,6 +23,12 @@ class ClientController extends Controller
         return view('client.index', compact('clients', 'services', 'employees', 'search', 'sortBy', 'sortDirection'));
     }
 
+    public function showDashboard()
+    {
+        $clientCount = Client::count(); // Count all clients
+        return view('dashboard', compact('clientCount'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

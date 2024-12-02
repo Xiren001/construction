@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Workload;
+
 use App\Models\CompletedWork;
 use App\Models\Service;
+
+use App\Models\User; // Import the User model
+use App\Models\Client; // Ensure you have this model if you're using it
+use App\Models\Workload; // Import the Workload model
 
 class WorkloadController extends Controller
 {
@@ -148,8 +152,17 @@ class WorkloadController extends Controller
         return redirect()->back()->with('success', 'Checklist submitted and workload marked as Completed!');
     }
 
-
-
+    public function showDashboard()
+    {
+        $employeeCount = User::count(); // Assuming employees are stored in the `users` table
+        $clientCount = Client::count(); // Replace `Client` with your actual model name for clients
+        $completedCount = Workload::where('status', 'Completed')->count();
+        $canceledCount = Workload::where('status', 'Canceled')->count();
+    
+        return view('dashboard', compact('employeeCount', 'clientCount', 'completedCount', 'canceledCount'));
+    }
+    
+    
 
     public function indexCompletedWorks()
     {
