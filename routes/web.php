@@ -22,9 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/workload/view', [WorkloadController::class, 'showReadOnly'])->name('workload.readOnly');
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/workload', [WorkloadController::class, 'index'])->middleware(['auth', 'verified'])->name('workload.index');
+
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
     Route::post('/workload', [WorkloadController::class, 'store'])->name('workload.store');
-    Route::get('/workload', [WorkloadController::class, 'index'])->name('workload.index');
+
     Route::patch('/workload/{id}/status', [WorkloadController::class, 'updateStatus'])->name('workload.updateStatus');
 
     Route::resource('clients', ClientController::class);
@@ -51,8 +53,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ClientController::class, 'showDashboard'])->name('dashboard');
     Route::get('/dashboard', [WorkloadController::class, 'showDashboard'])->name('dashboard');
     Route::get('/dashboard', [\App\Http\Controllers\WorkloadController::class, 'showDashboard'])->name('dashboard');
-
-
 });
 
 require __DIR__ . '/auth.php';

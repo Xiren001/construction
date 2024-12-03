@@ -13,6 +13,7 @@ use App\Models\Workload; // Import the Workload model
 
 class WorkloadController extends Controller
 {
+
     public function index()
     {
         $user = auth()->user();
@@ -23,11 +24,14 @@ class WorkloadController extends Controller
             ->where('hidden', false) // Exclude hidden workloads
             ->get();
 
+        // Count workloads for the logged-in employee
+        $workloadCount = $workloads->count();
+
+        // Retrieve all services
         $services = Service::all();
 
-        return view('workload.index', compact('workloads', 'services'));
+        return view('workload.index', compact('workloads', 'services', 'workloadCount'));
     }
-
 
     public function showReadOnly()
     {
@@ -153,16 +157,34 @@ class WorkloadController extends Controller
     }
 
     public function showDashboard()
-    {
-        $employeeCount = User::count(); // Assuming employees are stored in the `users` table
-        $clientCount = Client::count(); // Replace `Client` with your actual model name for clients
-        $completedCount = Workload::where('status', 'Completed')->count();
-        $canceledCount = Workload::where('status', 'Canceled')->count();
+{
+    $user = auth()->user();
+
+    // Calculate counts
+    $employeeCount = User::count();
+    $clientCount = Client::count();
+    $completedCount = Workload::where('status', 'Completed')->count();
+    $canceledCount = Workload::where('status', 'Canceled')->count();
+    $workloadCount = Workload::where('employee_id', $user->id)->count();
+
+    // Pass data and user role to the view
+    $isEmployee = $user->usertype === 'employee'; // Adjust based on your setup
+    $isAdmin = $user->usertype === 'admin'; // Add admin check
+
+    return view('dashboard', compact(
+        'employeeCount',
+        'clientCount',
+        'completedCount',
+        'canceledCount',
+        'workloadCount',
+        'isEmployee',
+        'isAdmin' // Pass the admin check to the view
+    ));
+}
+
     
-        return view('dashboard', compact('employeeCount', 'clientCount', 'completedCount', 'canceledCount'));
-    }
     
-    
+
 
     public function indexCompletedWorks()
     {
