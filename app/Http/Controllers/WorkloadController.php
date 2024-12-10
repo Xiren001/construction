@@ -51,6 +51,19 @@ class WorkloadController extends Controller
         return view('workload.read-only', compact('workloads', 'services'));
     }
 
+    public function showReadOnlyy()
+    {
+        if (auth()->user()->type === 'user') {
+            $workloads = Workload::where('user_id', auth()->id())->get();
+            $services = Service::all(); // Fetch all services or filter as needed
+        } else {
+            $workloads = collect(); // Empty collection for unauthorized users
+            $services = collect();  // Empty collection if no services are applicable
+        }
+    
+        return view('workload.read-onlyy', compact('workloads', 'services'));
+    }
+    
     public function store(Request $request)
     {
         // Validate the request
@@ -157,33 +170,33 @@ class WorkloadController extends Controller
     }
 
     public function showDashboard()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    // Calculate counts
-    $employeeCount = User::count();
-    $clientCount = Client::count();
-    $completedCount = Workload::where('status', 'Completed')->count();
-    $canceledCount = Workload::where('status', 'Canceled')->count();
-    $workloadCount = Workload::where('employee_id', $user->id)->count();
+        // Calculate counts
+        $employeeCount = User::count();
+        $clientCount = Client::count();
+        $completedCount = Workload::where('status', 'Completed')->count();
+        $canceledCount = Workload::where('status', 'Canceled')->count();
+        $workloadCount = Workload::where('employee_id', $user->id)->count();
 
-    // Pass data and user role to the view
-    $isEmployee = $user->usertype === 'employee'; // Adjust based on your setup
-    $isAdmin = $user->usertype === 'admin'; // Add admin check
+        // Pass data and user role to the view
+        $isEmployee = $user->usertype === 'employee'; // Adjust based on your setup
+        $isAdmin = $user->usertype === 'admin'; // Add admin check
 
-    return view('dashboard', compact(
-        'employeeCount',
-        'clientCount',
-        'completedCount',
-        'canceledCount',
-        'workloadCount',
-        'isEmployee',
-        'isAdmin' // Pass the admin check to the view
-    ));
-}
+        return view('dashboard', compact(
+            'employeeCount',
+            'clientCount',
+            'completedCount',
+            'canceledCount',
+            'workloadCount',
+            'isEmployee',
+            'isAdmin' // Pass the admin check to the view
+        ));
+    }
 
-    
-    
+
+
 
 
     public function indexCompletedWorks()

@@ -14,12 +14,20 @@ Route::get('/', function () {
     return view('landingpage');
 })->name('landingpage');
 
+Route::get('/', [UserController::class, 'landingpage'])->name('landingpage');
+Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+Route::get('/workload', [UserController::class, 'workload'])->middleware('auth')->name('workload.index');
+
 Route::middleware('auth')->group(function () {
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/workload/view', [WorkloadController::class, 'showReadOnly'])->name('workload.readOnly');
+    Route::get('/workloadlist/view', [WorkloadController::class, 'showReadOnlyy'])->name('workload.readOnlyy');
+    Route::get('/workload/read-onlyy', [WorkloadController::class, 'showReadOnlyy'])->name('workload.read-onlyy');
+
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/workload', [WorkloadController::class, 'index'])->middleware(['auth', 'verified'])->name('workload.index');

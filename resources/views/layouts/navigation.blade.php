@@ -33,9 +33,11 @@
                         <x-nav-link :href="route('service.index')" :active="request()->routeIs('service.index')">
                             {{ __('Services') }}
                         </x-nav-link>
-
                         <x-nav-link :href="route('completed_works.index')" :active="request()->routeIs('completed_works.index')">
                             {{ __('Completed Work') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('workload.read-onlyy')" :active="request()->routeIs('workload.read-onlyy')">
+                            {{ __('Work List') }}
                         </x-nav-link>
                        
                     </div>
