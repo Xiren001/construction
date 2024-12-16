@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-<div class="container-fluid mx-auto py-8 h-screen" style="padding: 10% 13%; height:100vh; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+<div class="container-fluid mx-auto py-8 h-screen" style="padding: 0 13%;">
     <div class="container mx-auto mt-6">
         <div class="flex flex-row gap-6">
             <div class="overflow-x-auto w-full h-screen">

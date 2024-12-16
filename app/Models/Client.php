@@ -13,8 +13,12 @@ class Client extends Model
         'name',
         'email',
         'phone',
-        'address_home'
+        'address_home',
+        'deadline',
+        'feedback',
+        'contract_file',
     ];
+    
 
     public function services()
     {

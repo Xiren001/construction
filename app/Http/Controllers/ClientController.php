@@ -30,55 +30,67 @@ class ClientController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:clients,email',
-            'phone' => 'required|numeric',
-            'address_home' => 'required|string',
-            'employee_id' => 'nullable|exists:users,id', // Correct reference to 'users' table
-            'services' => 'nullable|array',
-            'services.*' => 'exists:services,id'
-        ]);
-    
-        $client = new Client($validated);
-        $client->employee_id = $request->input('employee_id'); // Explicitly set employee_id
-        $client->save();
-    
-        // Attach services if provided
-        if (!empty($request->services)) {
-            $client->services()->attach($request->services);
-        }
-    
-        return redirect()->back()->with('success', 'Client added successfully.');
-    }
-    
+{
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|string|email|unique:clients,email',
+        'phone' => 'required|numeric',
+        'address_home' => 'required|string',
+        'deadline' => 'nullable|date',
+        'feedback' => 'nullable|string',
+        'contract_file' => 'nullable|file|mimes:pdf,docx|max:2048',
+        'employee_id' => 'nullable|exists:users,id',
+        'services' => 'nullable|array',
+        'services.*' => 'exists:services,id',
+    ]);
 
-    public function update(Request $request, $id)
-    {
-        $client = Client::findOrFail($id);
-    
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:clients,email,' . $id,
-            'phone' => 'required|numeric',
-            'address_home' => 'required|string',
-            'employee_id' => 'nullable|exists:users,id'
-        ]);
-    
-        $client->fill($request->only(['name', 'email', 'phone', 'address_home', 'employee_id']));
-        $client->employee_id = $request->input('employee_id'); // Explicitly set employee_id
-        $client->save();
-    
-        if ($request->has('services')) {
-            $client->services()->sync($request->services);
-        } else {
-            $client->services()->detach();
-        }
-    
-        return redirect()->route('client.index')->with('success', 'Client updated successfully');
+    // Handle file upload
+    if ($request->hasFile('contract_file')) {
+        $validated['contract_file'] = $request->file('contract_file')->store('contracts');
     }
-    
+
+    $client = Client::create($validated);
+    if (!empty($request->services)) {
+        $client->services()->attach($request->services);
+    }
+
+    return redirect()->back()->with('success', 'Client added successfully.');
+}
+
+public function update(Request $request, $id)
+{
+    $client = Client::findOrFail($id);
+
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|string|email|unique:clients,email,' . $id,
+        'phone' => 'required|numeric',
+        'address_home' => 'required|string',
+        'deadline' => 'nullable|date',
+        'feedback' => 'nullable|string',
+        'contract_file' => 'nullable|file|mimes:pdf,docx|max:2048',
+        'employee_id' => 'nullable|exists:users,id',
+    ]);
+
+    if ($request->hasFile('contract_file')) {
+        // Delete old file if exists
+        if ($client->contract_file) {
+            Storage::delete($client->contract_file);
+        }
+        $validated['contract_file'] = $request->file('contract_file')->store('contracts');
+    }
+
+    $client->update($validated);
+
+    if ($request->has('services')) {
+        $client->services()->sync($request->services);
+    } else {
+        $client->services()->detach();
+    }
+
+    return redirect()->route('client.index')->with('success', 'Client updated successfully.');
+}
+
 
 
     public function show($id)

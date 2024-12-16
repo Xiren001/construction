@@ -79,7 +79,18 @@
                                     </button>
 
                                     {{-- Edit Button --}}
-                                    <button class="bg-gray-600 text-black py-1 px-1 rounded-md hover:bg-gray-100" id="openEditClientModal" onclick="openEditClientModal( {{ $client->id }}, '{{ $client->name }}', '{{ $client->email }}', '{{ $client->phone }}', '{{ $client->address_home }}', '{{ $client->employee ? $client->employee->name : 'No employee assigned' }}' )">
+                                    <button class="bg-gray-600 text-black py-1 px-1 rounded-md hover:bg-gray-100" id="openEditClientModal" onclick="openEditClientModal(
+                                                                                                                                                                        {{ $client->id }},
+                                                                                                                                                                        '{{ $client->name }}',
+                                                                                                                                                                        '{{ $client->email }}',
+                                                                                                                                                                        '{{ $client->phone }}',
+                                                                                                                                                                        '{{ $client->address_home }}',
+                                                                                                                                                                        '{{ $client->employee_id ?? "No employee assigned" }}',
+                                                                                                                                                                        {{ json_encode($client->services->pluck('id')->toArray()) }},
+                                                                                                                                                                        '{{ $client->deadline ?? '' }}',
+                                                                                                                                                                        '{{ $client->feedback ?? '' }}',
+                                                                                                                                                                        '{{ $client->contract ? asset('storage/contracts/' . $client->contract) : '' }}'
+                                                                                                                                                                    )">
                                         <svg width="20px" height="20px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.5880000000000001"></g>
@@ -141,7 +152,7 @@
             </div>
             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-7xl">
                 <div class="bg-white w-full max-w-7xl">
-                    <form action="{{ route('client.store')}}" method="POST">
+                    <form action="{{ route('client.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{-- Page 1 --}}
                         <div id="createClientPage1" class="create-modal p-6">
@@ -168,6 +179,16 @@
                                                 <label for="address_home" class="block text-sm font-medium text-gray-700">Home Address</label>
                                                 <input type="text" name="address_home" id="address_home" class="form-input mt-1 block w-full rounded-md border-gray-300" required>
                                             </div>
+                                            <div class="w-full">
+                                                <label for="deadline" class="block text-sm font-medium text-gray-700">Deadline</label>
+                                                <input type="date" name="deadline" id="deadline" class="form-input mt-1 block w-full rounded-md border-gray-300">
+                                            </div>
+                                        </div>
+                                        <div class="flex row gap-4">
+                                            <div class="w-full">
+                                                <label for="feedback" class="block text-sm font-medium text-gray-700">Feedback</label>
+                                                <textarea name="feedback" id="feedback" class="form-input mt-1 block w-full rounded-md border-gray-300"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mt-6 flex justify-end gap-2">
@@ -183,6 +204,10 @@
                                 <div class="create w-full max-w-7xl mx-auto p-4 bg-white rounded-md shadow-md">
                                     <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 w-full">
+                                        <div class="mt-4">
+                                            <label for="contract_file" class="block text-sm font-medium text-gray-700">Upload Contract</label>
+                                            <input type="file" name="contract_file" id="contract_file" class="form-input mt-1 block w-full rounded-md border-gray-300">
+                                        </div>
                                         <div class="mt-4">
                                             <select name="employee_id" id="employee_id" class="form-select mt-1 block w-full rounded-md border-gray-300">
                                                 <option value="">Select Employee</option>
@@ -211,6 +236,7 @@
                                                 @endforeach
                                             </div>
                                         </div>
+
                                         <div class="mt-6 flex justify-end gap-2">
                                             <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="createClientPrev">Previous</button>
                                             <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
@@ -225,6 +251,7 @@
         </div>
     </div>
 
+
     @foreach($clients as $client)
     {{-- Edit Client Modal --}}
     <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="editClientModal">
@@ -235,7 +262,7 @@
             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-7xl">
                 <div class="bg-white w-full max-w-7xl">
                     {{-- Form begins here --}}
-                    <form id="editClientForm" action="{{ route('clients.update', $client->id) }}" method="POST">
+                    <form id="editClientForm" action="{{ route('clients.update', $client->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         {{-- Page 1 --}}
@@ -258,29 +285,41 @@
                                                 <input type="number" name="phone" id="editPhone" class="form-input mt-1 block w-full rounded-md border-gray-300" value="{{ $client->phone }}" required>
                                             </div>
                                         </div>
-
                                         <div class="flex row gap-4">
                                             <div class="w-full">
                                                 <label for="editAddressHome" class="block text-sm font-medium text-gray-700">Home Address</label>
                                                 <input type="text" name="address_home" id="editAddressHome" class="form-input mt-1 block w-full rounded-md border-gray-300" value="{{ $client->address_home }}">
                                             </div>
+                                            <div class="w-full">
+                                                <label for="editDeadline" class="block text-sm font-medium text-gray-700">Deadline</label>
+                                                <input type="date" name="deadline" id="editDeadline" class="form-input mt-1 block w-full rounded-md border-gray-300" value="{{ $client->deadline }}">
+                                            </div>
                                         </div>
-                                        <div class="mt-6 flex justify-end gap-2">
-                                            <button type="button" class="mr-4 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="closeEditClientModal">Cancel</button>
-                                            <button type="button" style="background-color: #3B82F6;" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700" id="editClientNext">Next</button>
+                                        <div class="flex row gap-4">
+                                            <div class="w-full">
+                                                <label for="editFeedback" class="block text-sm font-medium text-gray-700">Feedback</label>
+                                                <textarea name="feedback" id="editFeedback" class="form-input mt-1 block w-full rounded-md border-gray-300">{{ $client->feedback }}</textarea>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="mt-6 flex justify-end gap-2">
+                                        <button type="button" class="mr-4 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="closeEditClientModal">Cancel</button>
+                                        <button type="button" style="background-color: #3B82F6;" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700" id="editClientNext">Next</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
                         {{-- Page 2 --}}
                         <div id="editClientPage2" class="create-modal p-6 hidden" style="width: 40rem;">
-                            <div class="flex justify-center w-full ">
+                            <div class="flex justify-center w-full">
                                 <div class="create w-full max-w-7xl mx-auto p-4 bg-white rounded-md shadow-md">
                                     <h2 class="text-lg font-semibold text-gray-800">Service Information</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                        <div class="mt-4">
+                                            <label for="editContract" class="block text-sm font-medium text-gray-700">Upload Contract</label>
+                                            <input type="file" name="contract" id="editContract" class="form-input mt-1 block w-full rounded-md border-gray-300">
+                                        </div>
                                         <div class="mt-4">
                                             <select name="employee_id" id="editEmployeeName" class="form-select mt-1 block w-full rounded-md border-gray-300">
                                                 <option value="" disabled>Select Employee</option>
@@ -291,7 +330,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
                                         <div class="mt-4">
                                             <select id="editCategory" name="editcategory" class="form-select mt-1 block w-full rounded-md border-gray-300">
                                                 <option value=""></option>
@@ -300,7 +338,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
                                         <div class="mt-4">
                                             <div class="mt-1 bg-white rounded-lg shadow p-4 flex" id="editServicesContainer" style="flex-direction: column;">
                                                 @foreach($services as $service)
@@ -315,10 +352,11 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                        <div class="mt-6 flex justify-end gap-2">
-                                            <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="editClientPrev">Previous</button>
-                                            <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
-                                        </div>
+
+                                    </div>
+                                    <div class="mt-6 flex justify-end gap-2">
+                                        <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600" id="editClientPrev">Previous</button>
+                                        <button type="submit" style="background-color: #3B82F6;" class="text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -329,6 +367,8 @@
             </div>
         </div>
     </div>
+
+
 
     {{-- Read Client Modal --}}
     <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="readClientModal">
@@ -376,6 +416,8 @@
         </div>
     </div>
     @endforeach
+
+
     {{-- JavaScript for modal operations --}}
     <script>
         // Function to toggle visibility of modal pages
@@ -383,8 +425,6 @@
             document.getElementById(currentPageId).classList.add('hidden');
             document.getElementById(nextPageId).classList.remove('hidden');
         }
-
-
 
         // Function to handle modal visibility
         function toggleModal(modalId, action) {
@@ -397,8 +437,6 @@
                 modal.classList.remove('block');
             }
         }
-
-
 
         // Add event listeners for buttons that control modal and page navigation
         function addEventListeners(config) {
@@ -533,26 +571,50 @@
             toggleModal('readClientModal', 'open');
         }
 
-        // Function to populate Edit Client Modal with client and employee data
-        function openEditClientModal(id, name, email, phone, address_home, employeeName) {
 
-            // Set basic client information
-            document.getElementById('editName').value = name;
-            document.getElementById('editEmail').value = email;
-            document.getElementById('editPhone').value = phone;
-            document.getElementById('editAddressHome').value = address_home;
+        function openEditClientModal(id, name, email, phone, address_home, employeeId, services, deadline, feedback, contract) {
+            // Populate basic fields
+            document.getElementById('editName').value = name || '';
+            document.getElementById('editEmail').value = email || '';
+            document.getElementById('editPhone').value = phone || '';
+            document.getElementById('editAddressHome').value = address_home || '';
 
-            // Set employee information
-            document.getElementById('editEmployeeName').value = employeeName;
+            // Set the selected employee
+            const employeeSelect = document.getElementById('editEmployeeName');
+            if (employeeSelect) {
+                employeeSelect.value = employeeId !== "No employee assigned" ? employeeId : '';
+            }
 
-            // Set the form action for submission
-            document.getElementById('editClientForm').action = `/clients/${id}`;
+            // Populate and pre-select services
+            const servicesContainer = document.getElementById('editServicesContainer');
+            if (servicesContainer) {
+                const checkboxes = servicesContainer.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = Array.isArray(services) && services.includes(parseInt(checkbox.value));
+                });
+            }
 
-            // Open the modal
+            // Populate Deadline field
+            const deadlineInput = document.getElementById('editDeadline');
+            if (deadlineInput) {
+                deadlineInput.value = deadline || '';
+            }
+
+            // Populate Feedback field
+            const feedbackTextarea = document.getElementById('editFeedback');
+            if (feedbackTextarea) {
+                feedbackTextarea.value = feedback || '';
+            }
+
+            // Handle the uploaded contract (Show file name or leave empty)
+            const contractInput = document.getElementById('editContract');
+            if (contractInput) {
+                contractInput.value = contract || ''; // Reset contract field if no value is provided
+            }
+
+            // Open the Edit Client Modal
             toggleModal('editClientModal', 'open');
         }
-
-
 
         // Service filtering functionality
         function setupServiceFilter(dropdownId, servicesContainerId) {
