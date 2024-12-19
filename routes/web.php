@@ -9,6 +9,7 @@ use App\Http\Controllers\WorkloadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Routing\Registrar as MiddlewareRegistrar;
 use App\Http\Middleware\CheckUserType;
+use App\Http\Controllers\EmployeeImageController;
 
 // Public Routes
 Route::get('/', [UserController::class, 'landingpage'])->name('landingpage');
@@ -27,7 +28,6 @@ Route::middleware([
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
 
-
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -43,7 +43,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/completed/{id}', [WorkloadController::class, 'showCompletedWork'])->name('completed_works.show');
         Route::get('/workloadlist/view', [WorkloadController::class, 'showReadOnly'])->name('workload.readOnly');
         Route::get('/workload/read-onlyy', [WorkloadController::class, 'showReadOnlyy'])->name('workload.read-onlyy');
-
     });
 
     // Employee Routes
